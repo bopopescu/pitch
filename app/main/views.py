@@ -3,7 +3,7 @@ from . import main
 # from .models import get_pitch,get_pitch,search_pitch
 from .forms import ReviewForm
 # from ..models import Review
-from ..models import  User
+from ..models import  User,Pitch
 from flask_login import login_required
 from .. import db,photos
 from flask_login import login_required, current_user
@@ -23,7 +23,7 @@ def register():
         title = "New Account"
     return render_template('auth/register.html',registration_form = form)
 
-
+@main.route('/')
 def index():
 
     '''
@@ -31,11 +31,11 @@ def index():
     '''
     title = 'Home - Welcome to The perfect pictch'
     # Getting pictup movie
-    pickup_pitches = get_pitches('pickup')
-    interview_pitch = get_pitches('interview')
-    product_pitch = get_pitches('product')
+    pickup_pitches = Pitch.get_pitches('pickup')
+    interview_pitch = Pitch.get_pitches('interview')
+    product_pitch = Pitch.get_pitches('product')
 
-    return render_template('index.html', title = title, pickup = pickup_pitch, interview = interview_pitch, product = product_pitch )
+    return render_template('index.html', title = title, pickup = pickup_pitches, interview = interview_pitch, product = product_pitch )
 
 @main.route('/review/<int:id>')
 def single_review(id):

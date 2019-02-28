@@ -2,10 +2,10 @@ import os
 
 class Config:
 
-    MOVIE_API_BASE_URL ='https://api.themoviedb.org/3/movie/{}?api_key={}'
+    MOVIE_API_BASE_URL ='https://api.thepitchdb.org/3/pitch/{}?api_key={}'
     MOVIE_API_KEY = os.environ.get('MOVIE_API_KEY')
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://wecode:cecile@localhost/watchlist'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://wecode:cecile@localhost/pitch'
     UPLOADED_PHOTOS_DEST ='app/static/photos'
     # SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -28,7 +28,7 @@ class ProdConfig(Config):
 
 class DevConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://saphani:123abc@localhost/pitch'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://wecode:cecile@localhost/pitch'
     
 config_options = {
 'development':DevConfig,
