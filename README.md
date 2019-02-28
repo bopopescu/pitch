@@ -17,7 +17,7 @@ On the homepage user will see form that will have option of reseaching the name 
 ## Test Driven Development -TDD
 inter the name of news   submit Read the name of the  News views the  news  you  can see the Image there articles the  date has been wrotten that news.
 
-## Technologu Used
+## Technology Used
 
 Ptyhon3.6 
 HTML
@@ -26,7 +26,7 @@ Flask
 Boostrap
 
 ## contact
-com Phone:0782136949 Emails:habcecile@gmail.com Repositority:https://github.com/nyirahabineza/pitch.git
+ Phone:0782136949 Emails:habcecile@gmail.com Repositority:https://github.com/nyirahabineza/pitch.git
 # #License and Copyright
 
 .Permision of reading code         .You are not allowed to edit any file
