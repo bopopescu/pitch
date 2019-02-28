@@ -26,7 +26,7 @@ Flask
 Boostrap
 
 ## contact
- Phone:0782136949 Emails:habcecile@gmail.com Repositority:https://github.com/nyirahabineza/pitch.git
+com Phone:0782136949 Emails:habcecile@gmail.com Repositority:https://github.com/nyirahabineza/pitch.git
 # #License and Copyright
 
 .Permision of reading code         .You are not allowed to edit any file
