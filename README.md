@@ -1,3 +1,4 @@
+
 ## project name
   One minute Pitch
  Author: Claudine Akimanizanye <hacecile@gmail.com> and https://github.com/nyirahabineza/pitch.git
@@ -27,10 +28,11 @@ Boostrap
 
 ## contact
  Phone:0782136949 Emails:habcecile@gmail.com Repositority:https://github.com/nyirahabineza/pitch.git
-# #License and Copyright
+## License and Copyright
 
 .Permision of reading code         .You are not allowed to edit any file
 .permission of testing website      .You are  not allowed to move  anyfile or folder
 .Permision of Riview 
 .persimision of commenting           . You are not allow to migrate
 .Permission of giving pitch         .You are not allowed to host it again  this website.
+
