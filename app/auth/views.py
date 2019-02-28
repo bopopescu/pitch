@@ -1,95 +1,42 @@
-from flask import render_template,request,redirect,url_for,abort
-from . import main
+from flask import render_template,redirect,url_for, flash,request
+from flask_login import login_user,logout_user,login_required
+from . import auth
 from ..models import User
-from .. import db,photos
-# from .forms import UpdateProfile,PitchForm,CommentForm
-from flask_login import login_required,current_user
-import datetime
-
-# Views
-@main.route('/')
-def index():
-
-    '''
-    View root page function that returns the index page and its data
-    '''
-
-    title = 'Home - Welcome to Perfect Pitch'
-
-    # Getting reviews by category
-    interview_piches = Pitch.get_pitches('interview')
-    product_piches = Pitch.get_pitches('product')
-    promotion_pitches = Pitch.get_pitches('promotion')
+from .forms import LoginForm,RegistrationForm
+from .. import db
+from ..email import mail_message
 
 
-    return render_template('index.html',title = title, interview = interview_piches, product = product_piches, promotion = promotion_pitches)
+@auth.route('/login', methods = ['GET','POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email = form.email.data).first()
+        if user is not None and user.verify_password(form.password.data):
+            login_user(user,form.remember.data)
+            return redirect(request.args.get('next') or url_for('main.index'))
 
-@main.route('/user/<uname>')
-def profile(uname):
-    user = User.query.filter_by(username = uname).first()
-    pitches_count = Pitch.count_pitches(uname)
-    user_joined = user.date_joined.strftime('%b %d, %Y')
+        flash('Invalid username or password')
 
-    if user is None:
-        abort(404)
+    title = 'Pitch App Login'
+    return render_template('auth/login.html', title = title, login_form = form)
 
-    return render_template("profile/profile.html", user = user,pitches = pitches_count,date = user_joined)
 
-@main.route('/user/<uname>/update',methods = ['GET','POST'])
-@login_required
-def update_profile(uname):
-    user = User.query.filter_by(username = uname).first()
-    if user is None:
-        abort(404)
+@auth.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('main.index'))
 
-    form = UpdateProfile()
-if form.validate_on_submit():
-        user.bio = form.bio.data
 
+@auth.route('/register', methods = ['GET','POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username = form.username.data, email = form.email.data, password = form.password.data)
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('.profile',uname=user.username))
-
-    return render_template('profile/update.html',form = form)
-
-@main.route('/user/<uname>/update/pic',methods= ['POST'])
-@login_required
-def update_pic(uname):
-    user = User.query.filter_by(username = uname).first()
-    if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        path = f'photos/{filename}'
-        user.profile_pic_path = path
-        db.session.commit()
-    return redirect(url_for('main.profile',uname=uname))
-
-@main.route('/pitch/new', methods = ['GET','POST'])
-@login_required
-def new_pitch():
-    pitch_form = PitchForm()
-    if pitch_form.validate_on_submit():
-        title = pitch_form.title.data
-        pitch = pitch_form.text.data
-        category = pitch_form.category.data
-
-        # Updated pitch instance
-        new_pitch = Pitch(pitch_title=title,pitch_content=pitch,category=category,user=current_user,likes=0,dislikes=0)
-
-        # Save pitch method
-        new_pitch.save_pitch()
-        return redirect(url_for('.index'))
-
-    title = 'New pitch'
-    return render_template('new_pitch.html',title = title,pitch_form=pitch_form )
-
-@main.route('/pitches/interview_pitches')
-def interview_pitches():
-
-    pitches = Pitch.get_pitches('interview')
-
-    return render_template("interview_pitches.html", pitches = pitches)
-
-@main.route('/pitches/product_pitches')
-def product_pitches():
-    
+        # mail_message('Welcome to the Pitch App', 'email/welcome_user',user.email,user = user)
+        return redirect(url_for('auth.login'))
+        title = 'New Account'
+    return render_template('auth/register.html', registration_form = form)

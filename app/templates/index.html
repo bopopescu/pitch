@@ -1,55 +1,44 @@
-{% extends 'base.html'%}
-{% import 'macros.html' as macro%}
-
-<!-- Styles block -->
-
-
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
 <!-- Content block -->
-{% block content %}
-
-<div class="container">
-
-  {% if current_user.is_authenticated%}
-    <h1>Hello {{current_user.username}}</h1>
-  {% else %}
-    <h1>Hello stranger</h1>
-  {%endif%}
-    <form>
-        <input type="text" name="movie_query" placeholder="Search for a Movie" class="form-control">
-        <input type="submit"  value="Submit" class="btn btn-default">
-    </form>
-
+{%block content%}
+<div class="jumbotron text-center" style="background-color:burlywood; color: white; margin: 10px -100px 30px -100px;">
+    <h1>Pitch App</h1>
 </div>
 
 <div class="container">
-
-    <!-- Popular movie -->
     <div class="row">
-        <h3> Popular Movies</h3>
-        <ul>
-            {{ macro.displayMovieList(popular)}}
-        </ul>
+        <div class="col-md-6">
+            <div class="well well-lg">
+                <h3 style="color: burlywood;" class="text-center">Interview Pitches</h3>
+                <div class="row">
+                  <div class="col-md-4"></div>
+                  <div class="col-md-4"><a href="{{url_for('main.interview')}}" class="btn -center" style="background-color: burlywood; color:white;"></a></div>
+                  <div class="col-md-4"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="well well-lg">
+                <h3 style="color:burlywood;" class="text-center">Product Pitches</h3>
+                <div class="row">
+                  <div class="col-md-4"></div>
+                  <div class="col-md-4"><a href="{{url_for('main.product')}}" class="btn -center" style="background-color: burlywood; color:burlywood;"></a></div>
+                  <div class="col-md-4"></div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- Upcoming movie  -->
-    <div class="row">
-
-        <h3> Upcoming Movies </h3>
-        <ul>
-            {{ macro.displayMovieList(upcoming)}}
-        </ul>
+      <div class="col-md-6">
+        <div class="well well-lg">
+            <h3 style="color:whitesmoke;" class="text-center">Pickup Lines Pitches</h3>
+            <div class="row">
+              <div class="col-md-4"></div>
+              <div class="col-md-4"><a href="{{url_for('main.pickup')}}" class="btn -center" style="background-color: blanchedalmond; color: white;"> </a></div>
+              <div class="col-md-4"></div>
+            </div>
+        </div>
     </div>
-
-    <!-- Now showing movie -->
-    <div class="row">
-
-        <h3>Now Showing</h3>
-        <ul>
-            {{ macro.displayMovieList(now_showing)}}
-        </ul>
-    </div>
-
+  </div>
 </div>
-
-
-
-{% endblock%}
+{%endblock%}
