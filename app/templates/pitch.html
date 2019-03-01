@@ -1,39 +1,30 @@
 {% extends 'base.html'%}
 {% import 'macros.html' as macro%}
+{% import "bootstrap/wtf.html" as wtf %}
 <!-- Content block -->
-{% block content %}
-<div class="container">
-
-    <!-- Poster background -->
+{%block content%}
+<div class="container" style="font-family: 'Indie Flower', cursive;">
     <div class="row">
-
-        <h1>Reviews</h1>
+        <h3>{{pitch.pitch_title}}</h3>
         <hr>
-
-        {% if reviews %}
-            {{macro.displayReviews(reviews)}}
-
-        {% else%}
-            <h3 class="text-center">This pitch has no reviews </h3>
-
-            <a class="btn btn-success btn-lg text-center" href="/pitch/review/new/{{pitch.id}}"> Write a new review</a>
-        {% endif %}
+        <p>{{pitch.pitch_content}}</p>
+        <span>
+        <p>Posted on {{date}} by {{pitch.user.username| capitalize}}</p>
+        <a href="/pitch/{{pitch.id}}?like=1">
+            <i class="far fa-thumbs-up"></i>
+        </a>{{pitch.likes}} <a href="/pitch/{{pitch.id}}?dislike=1">
+            <i class="far fa-thumbs-down"></i>
+        </a>{{pitch.dislikes}}</span>
 
     </div>
     <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 posterPath" style="background: url({{pitch.poster}}) no-repeat center center">
-        </div>
-
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pitch-details">
-            <h3>{{ pitch.title }}</h3>
-
-            <p class="overview"> {{ pitch.overview }}</p>
-
-            <p class="ratings"> <b> {{ pitch.vote_average }}</b> - <i>{{ pitch.vote_count}} votes </i> </p>
-            <a class="ratings" href="/pitch/review/new/{{pitch.id}}"> Write a new review</a>
-
-</div>
+        <h4>Comments</h4>
+        <hr>
+        {% if current_user.is_authenticated %}
+            {{ wtf.quick_form(comment_form) }}
+        {%endif%}
+        {{macro.displayComments(comments)}}
     </div>
 
 </div>
-{% endblock %}
+{%endblock%}

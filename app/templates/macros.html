@@ -1,30 +1,20 @@
-{% macro displayPitchList(pitch_list) %}
-
-    {% for pitch in pitch_list %}
-        <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 pitch-card">
-            <img src="{{ pitch.poster }}" alt="{{ pitch.title }} poster" class="img-responsive">
-            <li class="text-center">
-                <a href="/picth/{{pitch.id}}">
-                    {{ pitch.title|truncate(10)}}</a>
-            </li>
+{% macro displayPitches(pitches_list)%}
+    {%for pitch in pitches_list%}
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 review-card">
+            <div class="well well-lg">
+                <h4>{{pitch.pitch_title}}</h4>
+                <p>{{pitch.pitch_content| truncate(100)}}</p>
+                <p>Written by:  {{pitch.user.username}} <a href="/pitch/{{pitch.id}}" class="btn btn-primary pull-right"> more Read</a> </p>
+            </div>
         </div>
+    {%endfor%}
+{%endmacro%}
 
-    {% endfor %}
-
-{% endmacro %}
-<!-- < Displaying reviews macro -->
-{% macro displayReviews(review_list) %}
-
-    {% for review in review_list %}
-
-    <div class="row">
-
-      <div class="col-xs-2 col-sm-2 col-md-4 col-lg-4">
-        <h4>Author</h4>
-        <p>{{review.user.username}}</p>
-      </div>
-      <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8">
-        <h2> <a href="{{url_for('main.single_review',id=review.id)}}">{{review.pitch_title}}</a> </h2>
-    </div>
-    {% endfor %}
-{% endmacro %} 
+{%macro displayComments(comments_list)%}
+    {%for comment in comments_list%}
+        <div class="col-md-12">
+            <h5>{{comment.user.username}}</h5>
+            <p>{{comment.comment}}</p>
+        </div>
+    {%endfor%}
+{%endmacro%}
