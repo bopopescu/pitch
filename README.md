@@ -1,7 +1,8 @@
 
 ## project name
   One minute Pitch
- Author: Claudine Akimanizanye <hacecile@gmail.com> and https://github.com/nyirahabineza/pitch.git
+  
+ Author:  <hacecile@gmail.com> and https://github.com/nyirahabineza/pitch.git
 Date:   Tue Feb 26 11:20:53 2019 +0200
 
 ## Descrption of the project
